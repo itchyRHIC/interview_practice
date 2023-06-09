@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面接対策質問集</title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 20px;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+		}
+
+		.question {
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		.answer {
+			margin-top: 20px;
+			display: none;
+		}
+
+		button {
+			font-size: 20px;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			background-color: #1E90FF;
+			color: #FFFFFF;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin: 10px;
+		}
+
+		button:hover {
+			background-color: #4169E1;
+		}
+	</style>
+</head>
+<body>
+	<h1>ランダムに質問が出力されます</h1>
+	<div class="container">
+		<div class="question" id="question">質問を表示するにはボタンをクリックしてください。</div>
+		<button id="showAnswer" onclick="displayNextQuestion()">回答する</button>
+		<!-- <div class="answer" id="answer">
+			<label for="response">回答:</label>
+			<textarea id="response" name="response" rows="5" cols="50"></textarea>
+			<br> -->
+        <button id="finishAnswer" style="display:none" onclick="calcAnswerTime()">回答終了</button>
+		<!-- </div> -->
+		<div id="time" style="display:none">回答時間:</div>
+		<button id="showQuestion" style="display:none" onclick="displayNextQuestion()">次の質問を表示</button>
+        <div id = "id0"></div>
+	</div>
+	<script>
+
+		const questions = [
+			"自己紹介をしてください。",
+			"学生時代に取り組んだことは何ですか？"
+            // 質問を上記の形式で記入してください。
+        ];
+
+        let startTime; // 開始時刻
+
+        // 回答終了ボタンの要素を取得
+        const endButton = document.getElementById("finishAnswer");
+
+        // 回答終了ボタンのクリックイベント
+        endButton.addEventListener("click", () => {
+        // 終了時刻を取得
+            const endTime = new Date().getTime();
+
+            // 時間の差を計算して秒単位に変換
+            const timeDiff = Math.floor((endTime - startTime) / 1000);
+            var title = "回答にかかった時間："+timeDiff+"秒";
+            // 経過時間を表示
+            const timeElm = document.getElementById("time");
+            timeElm.textContent = title;
+
+            // 次の質問を表示ボタンを表示
+            const nextButton = document.getElementById("showQuestion");
+            nextButton.style.display = "block";
+
+            // 回答終了ボタンを非表示
+            endButton.style.display = "none";
+        });
+
+        function calcAnswerTime() {
+            const endTime = new Date().getTime();
+            const timeDiff = Math.floor((endTime - startTime) / 1000);
+            const timeElm = document.getElementById('time');
+        
+            timeElm.textContent = '回答にかかった時間：',timeDiff,'秒';
+            timeElm.style.display = 'block';
+
+            const showQuestionButton = document.getElementById('showQuestion');
+            showQuestionButton.style.display = 'block';
+
+            const endButton = document.getElementById('finishAnswer');
+            endButton.style.display = 'none';
+
+        }
+        
+        // 次の質問を表示する関数
+        function displayNextQuestion() {
+            // 質問をランダムに取得
+            const index = Math.floor(Math.random() * questions.length);
+            const question = questions[index];
+            
+            // 質問を表示
+            const questionElm = document.getElementById("question");
+            questionElm.textContent = question;
+            
+            // 開始時刻を取得
+            startTime = new Date().getTime();
+            
+            // 回答終了ボタンを表示
+            const endButton = document.getElementById("finishAnswer");
+            endButton.style.display = "block";
+            // alert("aaaaaa");
+            
+            // 次の質問を表示ボタンを非表示
+            const nextButton = document.getElementById("showQuestion");
+            nextButton.style.display = "none";
+            
+            const startBotton = document.getElementById("showAnswer");
+            startBotton.style.display = "none";
+        }
+
+  
+        // 最初の質問を表示
+        displayNextQuestion();
+
+        // 次の質問を表示するボタンの要素を取得
+        const nextButton = document.getElementById("showQuestion");
+
+        // 次の質問を表示するボタンのクリックイベント
+        nextButton.addEventListener("click", () => {
+            // 経過時間を非表示
+            const timeElm = document.getElementById("time");
+            timeElm.textContent = "";
+
+            // 次の質問を表示
+            displayNextQuestion();
+        });
+
+  </script>
+</body>
+
+    </script>
+
+
+</body>
+</html>
